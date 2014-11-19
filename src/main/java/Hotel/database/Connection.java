@@ -14,8 +14,12 @@ public class Connection {
         Class.forName("com.mysql.jdbc.Driver");  // Load JDBC driver
 
         this.connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/Hotel", "root", "fastralee"
+                "jdbc:mysql://localhost:3306/", "root", "fastralee"
         );
+
+        Statement statement = this.connection.createStatement();
+        statement.execute("CREATE DATABASE IF NOT EXISTS hotel");
+        statement.execute("USE hotel");
 
         Connection.booking = new Booking(this.connection);
         Connection.booking.setup();
