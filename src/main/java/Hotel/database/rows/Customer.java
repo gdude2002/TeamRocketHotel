@@ -15,10 +15,10 @@ public class Customer implements Row {
     public void setData(ResultSet resultSet) {
     	
     	try {
-			this.cid = resultSet.getInt(cid);
+			this.cid = resultSet.getInt("cid");
 	
-			this.fName = resultSet.getString(fName);
-			this.lName = resultSet.getString(lName);
+			this.fName = resultSet.getString("fname");
+			this.lName = resultSet.getString("lname");
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,6 +51,9 @@ public class Customer implements Row {
 	}
 	
 	public String toString(){
-		return String.format("CID : %d | firstName : %s | lastName : %s ",this.cid,this.fName,this.lName);
+		return String.format(
+				"CID: %d | firstName: %s | lastName: %s ",
+				this.cid, this.fName, this.lName
+		);
 	}
 }

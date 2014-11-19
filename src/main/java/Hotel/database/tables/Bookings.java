@@ -29,9 +29,9 @@ public class Bookings extends Table {
             ResultSet r = statement.executeQuery("SELECT * FROM booking");
 
             while (r.next()) {
-                Booking b = new Booking();
-                b.setData(r);
-                System.out.println(b);
+                Booking row = new Booking();
+                row.setData(r);
+                System.out.println(row);
             }
 
             // Do cleanup
