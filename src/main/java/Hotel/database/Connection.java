@@ -1,7 +1,7 @@
 package Hotel.database;
 
-import Hotel.database.tables.Bookinga;
-import Hotel.database.tables.Customera;
+import Hotel.database.tables.Bookings;
+import Hotel.database.tables.Customers;
 import Hotel.database.tables.Rooms;
 
 import java.sql.*;
@@ -23,10 +23,10 @@ public class Connection {
         statement.execute("CREATE DATABASE IF NOT EXISTS hotel");
         statement.execute("USE hotel");
 
-        Connection.booking = new Bookinga(this.connection);
+        Connection.booking = new Bookings(this.connection);
         Connection.booking.setup();
 
-        Connection.customer = new Customera(this.connection);
+        Connection.customer = new Customers(this.connection);
         Connection.customer.setup();
 
         Connection.room = new Rooms(this.connection);
