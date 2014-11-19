@@ -33,6 +33,11 @@ public class Bookings extends Table {
                 b.setData(r);
                 System.out.println(b);
             }
+
+            // Do cleanup
+            r.close();
+            statement.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
