@@ -30,4 +30,4 @@ Suites/rooms:
 
 The user of the system should be able to view the number and type of rooms
 available for a given date, make, view and cancel bookings. The user should
-also be able to create and edit cleints (customers) for the system.
+also be able to create and edit clients (customers) for the system.
