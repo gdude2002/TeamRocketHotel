@@ -1,6 +1,8 @@
 package Hotel.database;
 
 import Hotel.database.tables.Booking;
+import Hotel.database.tables.Customer;
+import Hotel.database.tables.Room;
 
 import java.sql.*;
 
@@ -23,5 +25,11 @@ public class Connection {
 
         Connection.booking = new Booking(this.connection);
         Connection.booking.setup();
+
+        Connection.customer = new Customer(this.connection);
+        Connection.customer.setup();
+
+        Connection.room = new Room(this.connection);
+        Connection.room.setup();
     }
 }
