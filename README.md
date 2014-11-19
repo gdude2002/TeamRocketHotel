@@ -14,7 +14,7 @@ Create the database to store the information related to the hotel.
 
 Create a Swing frontend for..
 
-* Registering the bookins
+* Registering the bookings
 * Viewing the bookings
 * Deleting a booking
 * Creating a client
