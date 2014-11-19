@@ -1,10 +1,9 @@
 package Hotel.database.tables;
 
 import Hotel.database.Table;
+import Hotel.database.rows.Booking;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Bookings extends Table {
     public Bookings(Connection conn) {
@@ -22,8 +21,18 @@ public class Bookings extends Table {
                             "rid INTEGER," +
                             "arrival DATE NOT NULL," +
                             "departure DATE NOT NULL" +
-                    ")"
+                            ")"
             );
+
+            System.out.println("== Bookings (if any) ==");
+
+            ResultSet r = statement.executeQuery("SELECT * FROM booking");
+
+            while (r.next()) {
+                Booking b = new Booking();
+                b.setData(r);
+                System.out.println(b);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
