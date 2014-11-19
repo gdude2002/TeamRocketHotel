@@ -17,7 +17,7 @@ public class Rooms extends Table {
              Statement statement = this.getConnection().createStatement();
              statement.executeUpdate(
                      "CREATE TABLE IF NOT EXISTS room(" +
-                             "id INTEGER PRIMARY KEY AUTO_INCREMENT," +
+                             "id INTEGER PRIMARY KEY," +
                              "roomType INTEGER," +
                              "roomCost INTEGER," +
                              "status BOOLEAN" +
