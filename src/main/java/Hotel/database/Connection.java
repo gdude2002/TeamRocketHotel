@@ -1,4 +1,4 @@
-package database;
+package Hotel.database;
 
 import java.sql.*;
 

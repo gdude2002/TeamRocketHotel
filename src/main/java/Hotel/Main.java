@@ -1,4 +1,6 @@
-import database.Connection;
+package Hotel;
+
+import Hotel.database.Connection;
 
 import java.sql.SQLException;
 
