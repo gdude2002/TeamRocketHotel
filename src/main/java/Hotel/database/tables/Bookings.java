@@ -162,4 +162,104 @@ public class Bookings extends Table {
 
         return null;  // Return null if there was an error or no bookings found
     }
+
+    public boolean deleteBooking(
+            @NotNull Booking booking
+    ) {
+        return this.deleteBooking(booking.getID());
+    }
+
+    public boolean deleteBooking(
+            @NotNull Integer id
+    ) {
+        try {
+            PreparedStatement statement = this.getConnection().prepareStatement(
+                    "DELETE FROM bookings WHERE id=?"
+            );
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;  // Returns the number of rows removed
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Insert or update a Booking into the database. If a booking with this ID exists, we'll update it,
+     * otherwise we'll add a new one.
+     *
+     * @param booking The Booking object to insert or update
+     */
+    public void upsert(
+            @NotNull Booking booking
+    ) {
+        this.upsert(booking.getID(), booking.getCustomerID(), booking.getRoomID(), booking.getArrivalDate(), booking.getDepartureDate());
+    }
+
+    /**
+     * Insert or update a Booking into the database. If a booking with this ID exists, we'll update it,
+     * otherwise we'll add a new one.
+     *
+     * @param id The booking ID - use null if you're making a new booking
+     * @param customer The Customer object that this booking refers to
+     * @param room The Room object that this booking refers to
+     * @param arrival The arrival java.sql.Date object
+     * @param departure The departure java.sql.Date object
+     */
+    public void upsert(
+            Integer id,  // This may be null
+            @NotNull Customer customer,
+            @NotNull Room room,
+            @NotNull Date arrival,
+            @NotNull Date departure
+    ) {
+        if (id == null) {
+            id = 0;  // There should never be an ID of 0 in the database
+        }
+
+        this.upsert(id, customer.getCid(), room.getId(), arrival, departure);
+    }
+
+    /**
+     * Insert or update a Booking into the database. If a booking with this ID exists, we'll update it,
+     * otherwise we'll add a new one.
+     *
+     * @param id The booking ID - use null if you're making a new booking
+     * @param cid The customer ID that this booking refers to
+     * @param rid The room ID that this booking refers to
+     * @param arrival The arrival java.sql.Date object
+     * @param departure The departure java.sql.Date object
+     */
+    public void upsert(
+            Integer id,
+            @NotNull Integer cid,
+            @NotNull Integer rid,
+            @NotNull Date arrival,
+            @NotNull Date departure
+    ) {
+        if (id == null) {
+            id = 0;  // There should never be an ID of 0 in the database
+        }
+
+        try {
+            PreparedStatement statement = this.getConnection().prepareStatement(
+                    "INSERT INTO booking (id, cid, rid, arrival, departure) " +
+                    "VALUES (?, ?, ?, ?, ?) " +
+                    "ON DUPLICATE KEY UPDATE " +
+                            "cid=VALUES(cid), rid=VALUES(rid), " +
+                            "arrival=VALUES(arrival), departure=VALUES(departure)"
+            );
+
+            statement.setInt(1, id);
+            statement.setInt(2, cid);
+            statement.setInt(3, rid);
+            statement.setDate(4, arrival);
+            statement.setDate(5, departure);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

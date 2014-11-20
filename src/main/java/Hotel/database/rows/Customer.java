@@ -6,10 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Customer implements Row {
-
-	private String fName ;
+	private Integer cid = 0;  // Means that a manually-created Customer will always be a new row in the database
+	private String fName;
 	private String lName;
-	private Integer cid;
 
 	@Override
 	public void setData(ResultSet resultSet) throws SQLException {

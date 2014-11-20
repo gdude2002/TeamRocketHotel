@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Room implements Row {
-    private Integer id;
+    private Integer id = 0;  // Means that a manually-created Room will always be a new row in the database
     private Integer roomType;
     private Integer roomCost;
     private Boolean status;

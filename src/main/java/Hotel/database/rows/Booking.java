@@ -4,10 +4,10 @@ import Hotel.database.Row;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 public class Booking implements Row {
-    private Integer id;
+    private Integer id = 0;  // Means that a manually-created Booking will always be a new row in the database
     private Integer cid;
     private Integer rid;
     private Date arrivalDate;
