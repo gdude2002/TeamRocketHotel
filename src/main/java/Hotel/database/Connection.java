@@ -15,8 +15,14 @@ public class Connection {
     public Connection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");  // Load JDBC driver
 
+        final String hostname = "localhost";
+        final Integer port = 3306;
+        final String username = "root";
+        final String password = "fastralee";
+
         this.connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/", "root", "fastralee"
+                String.format("jdbc:mysql://%s:%s/", hostname, port),
+                username, password
         );
 
         Statement statement = this.connection.createStatement();

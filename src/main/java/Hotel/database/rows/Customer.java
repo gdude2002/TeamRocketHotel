@@ -12,13 +12,12 @@ public class Customer implements Row {
 
 	@Override
 	public void setData(ResultSet resultSet) throws SQLException {
-
 		this.cid = resultSet.getInt("cid");
-
 		this.fName = resultSet.getString("fname");
 		this.lName = resultSet.getString("lname");
-
 	}
+
+	// region Getters and setters
 
 	public String getfirstName() {
 		return fName;
@@ -39,6 +38,8 @@ public class Customer implements Row {
 	public Integer getCid() {
 		return cid;
 	}
+
+	// endregion
 
 	public String toString(){
 		return String.format(

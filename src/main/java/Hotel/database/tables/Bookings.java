@@ -17,14 +17,15 @@ public class Bookings extends Table {
     public void setup() {
         try {
             Statement statement = this.getConnection().createStatement();
+
             statement.executeUpdate(
-                    "CREATE TABLE IF NOT EXISTS booking(" +
-                            "id INTEGER PRIMARY KEY AUTO_INCREMENT," +
-                            "cid INTEGER," +
-                            "rid INTEGER," +
-                            "arrival DATE NOT NULL," +
-                            "departure DATE NOT NULL" +
-                            ")"
+                "CREATE TABLE IF NOT EXISTS booking(" +
+                    "id INTEGER PRIMARY KEY AUTO_INCREMENT," +
+                    "cid INTEGER," +
+                    "rid INTEGER," +
+                    "arrival DATE NOT NULL," +
+                    "departure DATE NOT NULL" +
+                ")"
             );
 
             System.out.println("== Bookings (if any) ==");

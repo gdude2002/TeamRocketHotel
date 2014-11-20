@@ -17,12 +17,14 @@ public class Customers extends Table {
     public void setup() {
     	 try {
              Statement statement = this.getConnection().createStatement();
+
              statement.executeUpdate(
-            		 "CREATE TABLE IF NOT EXISTS customer(" +
-            				 "cid INTEGER PRIMARY KEY AUTO_INCREMENT," + 
-            				 "fname VARCHAR(255),"+
-            				 "lname VARCHAR(255)" +
-                     ")");
+                 "CREATE TABLE IF NOT EXISTS customer(" +
+                     "cid INTEGER PRIMARY KEY AUTO_INCREMENT," +
+                     "fname VARCHAR(255),"+
+                     "lname VARCHAR(255)" +
+                 ")"
+             );
 
              System.out.println("== Customers (if any) ==");
 

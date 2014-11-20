@@ -17,13 +17,14 @@ public class Rooms extends Table {
     public void setup() {
     	 try {
              Statement statement = this.getConnection().createStatement();
+
              statement.executeUpdate(
-                     "CREATE TABLE IF NOT EXISTS room(" +
-                             "id INTEGER PRIMARY KEY," +
-                             "roomType INTEGER," +
-                             "roomCost INTEGER," +
-                             "status BOOLEAN" +
-                     ")"
+                 "CREATE TABLE IF NOT EXISTS room(" +
+                     "id INTEGER PRIMARY KEY," +
+                     "roomType INTEGER," +
+                     "roomCost INTEGER," +
+                     "status BOOLEAN" +
+                 ")"
              );
 
              System.out.println("== Rooms (if any) ==");
