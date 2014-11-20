@@ -1,5 +1,6 @@
 package Hotel.database.rows;
 
+import Hotel.database.RoomType;
 import Hotel.database.Row;
 
 import java.sql.ResultSet;
@@ -7,14 +8,14 @@ import java.sql.SQLException;
 
 public class Room implements Row {
     private Integer id = 0;  // Means that a manually-created Room will always be a new row in the database
-    private Integer roomType;
+    private RoomType roomType;
     private Integer roomCost;
     private Boolean status;
 
     @Override
     public void setData(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getInt("id");
-        this.roomType = resultSet.getInt("roomType");
+        this.roomType = RoomType.getFromValue(resultSet.getInt("roomType"));
         this.roomCost = resultSet.getInt("roomCost");
         this.status = resultSet.getBoolean("status");
     }
@@ -25,11 +26,11 @@ public class Room implements Row {
         return id;
     }
 
-    public Integer getRoomType() {
+    public RoomType getRoomType() {
         return roomType;
     }
 
-    public void setRoomType(Integer roomType) {
+    public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
     }
 

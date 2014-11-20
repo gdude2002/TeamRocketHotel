@@ -5,8 +5,11 @@ import Hotel.database.rows.Booking;
 import Hotel.database.rows.Customer;
 import Hotel.database.rows.Room;
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bookings extends Table {
     public Bookings(Connection conn) {
@@ -76,6 +79,93 @@ public class Bookings extends Table {
         }
 
         return null;  // Return null if there was an error or no bookings found
+    }
+
+    /**
+     * Get a List containing all the bookings in the database.
+     *
+     * @return All the bookings in the database
+     */
+    public List<Booking> getBookings() {
+        try {
+            PreparedStatement statement = this.getConnection().prepareStatement(
+                    "SELECT * FROM booking"
+            );
+
+            ResultSet set = statement.executeQuery();
+
+            List<Booking> bookings = new ArrayList<>();
+
+            while (set.next()) {
+                Booking b = new Booking();
+                b.setData(set);
+                bookings.add(b);
+            }
+
+            return bookings;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();  // No bookings (or an error). The default case.
+    }
+
+    /**
+     * Get all bookings within a date range. This is an inclusive range, so it
+     * will also include bookings that are at the extreme ends of the range.
+     *
+     * @param arrival Arrival (starting) date, use null to ignore
+     * @param departure Departure (ending) date, use null to ignore
+     * @return List of Bookings that match
+     */
+    @Nullable
+    public List<Booking> getBookingsRange(Date arrival, Date departure) {
+        PreparedStatement statement;
+
+        try {
+            if (arrival != null) {  // If we have an arrival date..
+                if (departure != null) {  // If we also have a departure date..
+                    // Then we'll check both
+                    statement = this.getConnection().prepareStatement(
+                            "SELECT * FROM booking WHERE arrival >= ? AND departure <= ?"
+                    );
+                    statement.setDate(1, arrival);
+                    statement.setDate(2, departure);
+                } else {
+                    // Otherwise, just check the arrival date
+                    statement = this.getConnection().prepareStatement(
+                            "SELECT * FROM booking WHERE arrival >= ?"
+                    );
+                    statement.setDate(1, arrival);
+                }
+            } else if (departure != null) {
+                // If not, and we have a departure date, let's use that instead
+                statement = this.getConnection().prepareStatement(
+                        "SELECT * FROM booking WHERE departure >= ?"
+                );
+                statement.setDate(1, departure);
+            } else {
+                // If we don't have either, well.. Just return.
+                return new ArrayList<>();
+            }
+
+            // OK, now the actual logic..
+
+            ResultSet set = statement.executeQuery();
+            ArrayList<Booking> bookings = new ArrayList<>();
+
+            while(set.next()) {
+                Booking b = new Booking();
+                b.setData(set);
+                bookings.add(b);
+            }
+
+            return bookings;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();  // No bookings (or an error)
     }
 
     /**
