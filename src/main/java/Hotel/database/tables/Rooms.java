@@ -3,10 +3,7 @@ package Hotel.database.tables;
 import Hotel.database.Table;
 import Hotel.database.rows.Room;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Rooms extends Table {
     public Rooms(Connection conn) {
@@ -43,5 +40,29 @@ public class Rooms extends Table {
          } catch (SQLException e) {
              e.printStackTrace();
          }
+    }
+
+    public Room getRoom(Integer id) {
+        try {
+            PreparedStatement statement = this.getConnection().prepareStatement(
+                    "SELECT * FROM room WHERE id=? LIMIT 1"
+            );
+
+            statement.setInt(1, id);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                Room customer = new Room();
+                result.first();
+                customer.setData(result);
+
+                return customer;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

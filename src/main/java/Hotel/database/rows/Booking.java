@@ -1,6 +1,9 @@
 package Hotel.database.rows;
 
+import Hotel.database.Connection;
 import Hotel.database.Row;
+import Hotel.database.tables.Customers;
+import Hotel.database.tables.Rooms;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,6 +35,10 @@ public class Booking implements Row {
         return cid;
     }
 
+    public Customer getCustomer() {
+        return ((Customers) Connection.customer).getCustomer(this.getCustomerID());
+    }
+
     public void setCustomerID(Integer cid) {
         this.cid = cid;
     }
@@ -46,6 +53,10 @@ public class Booking implements Row {
 
     public void setRoomID(Integer rid) {
         this.rid = rid;
+    }
+
+    public Room getRoom(Integer id) {
+        return ((Rooms) Connection.room).getRoom(this.getRoomID());
     }
 
     public void setRoom(Room room) {

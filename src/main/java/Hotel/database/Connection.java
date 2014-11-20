@@ -8,9 +8,9 @@ import java.sql.*;
 
 public class Connection {
     private final java.sql.Connection connection;
-    private static Table customer;
-    private static Table booking;
-    private static Table room;
+    public static Table customer;
+    public static Table booking;
+    public static Table room;
 
     public Connection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");  // Load JDBC driver
