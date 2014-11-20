@@ -28,24 +28,32 @@ public class Booking implements Row {
 
     // region Getters and setters
 
-    public Integer getId() {
+    public Integer getID() {
         return id;
     }
 
-    public Integer getCid() {
+    public Integer getCustomerID() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCustomerID(Integer cid) {
         this.cid = cid;
     }
 
-    public Integer getRid() {
+    public void setCustomer(Customer customer) {
+        this.cid = customer.getCid();
+    }
+
+    public Integer getRoomID() {
         return rid;
     }
 
-    public void setRid(Integer rid) {
+    public void setRoomID(Integer rid) {
         this.rid = rid;
+    }
+
+    public void setRoom(Room room) {
+        this.rid = room.getId();
     }
 
     public Date getArrivalDate() {
