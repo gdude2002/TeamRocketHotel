@@ -12,17 +12,12 @@ public class Customer implements Row {
 	private Integer cid;
 
 	@Override
-	public void setData(ResultSet resultSet) {
+	public void setData(ResultSet resultSet) throws SQLException {
 
-		try {
-			this.cid = resultSet.getInt("cid");
+		this.cid = resultSet.getInt("cid");
 
-			this.fName = resultSet.getString("fname");
-			this.lName = resultSet.getString("lname");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.fName = resultSet.getString("fname");
+		this.lName = resultSet.getString("lname");
 
 	}
 

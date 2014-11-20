@@ -12,15 +12,11 @@ public class Room implements Row {
     private Boolean status;
 
     @Override
-    public void setData(ResultSet resultSet) {
-        try {
-            this.id = resultSet.getInt("id");
-            this.roomType = resultSet.getInt("roomType");
-            this.roomCost = resultSet.getInt("roomCost");
-            this.status = resultSet.getBoolean("status");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void setData(ResultSet resultSet) throws SQLException {
+        this.id = resultSet.getInt("id");
+        this.roomType = resultSet.getInt("roomType");
+        this.roomCost = resultSet.getInt("roomCost");
+        this.status = resultSet.getBoolean("status");
     }
 
     // region Getters and setters

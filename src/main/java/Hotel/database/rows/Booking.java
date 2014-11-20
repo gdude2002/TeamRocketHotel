@@ -14,16 +14,12 @@ public class Booking implements Row {
     private Date departureDate;
 
     @Override
-    public void setData(ResultSet resultSet) {
-        try {
-            this.id = resultSet.getInt("id");
-            this.cid = resultSet.getInt("cid");
-            this.rid = resultSet.getInt("rid");
-            this.arrivalDate = resultSet.getDate("arrival");
-            this.departureDate = resultSet.getDate("departure");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void setData(ResultSet resultSet) throws SQLException {
+        this.id = resultSet.getInt("id");
+        this.cid = resultSet.getInt("cid");
+        this.rid = resultSet.getInt("rid");
+        this.arrivalDate = resultSet.getDate("arrival");
+        this.departureDate = resultSet.getDate("departure");
     }
 
     // region Getters and setters
