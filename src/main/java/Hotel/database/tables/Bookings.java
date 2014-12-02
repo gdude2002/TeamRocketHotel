@@ -4,8 +4,6 @@ import Hotel.database.Table;
 import Hotel.database.rows.Booking;
 import Hotel.database.rows.Customer;
 import Hotel.database.rows.Room;
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,7 +56,7 @@ public class Bookings extends Table {
      * @return The Booking if it was found, otherwise null
      */
     public Booking getBooking(
-            @NotNull Integer id  // Argument may not be null
+            Integer id  // Argument may not be null
     ) {
         try {
             PreparedStatement statement = this.getConnection().prepareStatement(  // Create a prepared statement
@@ -118,7 +116,6 @@ public class Bookings extends Table {
      * @param departure Departure (ending) date, use null to ignore
      * @return List of Bookings that match
      */
-    @Nullable
     public List<Booking> getBookingsRange(Date arrival, Date departure) {
         PreparedStatement statement;
 
@@ -175,7 +172,7 @@ public class Bookings extends Table {
      * @return The Booking if it was found, otherwise null
      */
     public Booking getBookingByCustomer(
-            @NotNull Customer customer
+            Customer customer
     ) {
         return this.getBookingByCustomer(customer.getCid());
     }
@@ -187,7 +184,7 @@ public class Bookings extends Table {
      * @return The Booking if it was found, otherwise null
      */
     public Booking getBookingByCustomer(
-            @NotNull Integer id
+            Integer id
     ) {
         try {
             PreparedStatement statement = this.getConnection().prepareStatement(  // Create a prepared statement
@@ -218,7 +215,7 @@ public class Bookings extends Table {
      * @return The Booking if it was found, otherwise null
      */
     public Booking getBookingByRoom(
-            @NotNull Room room
+            Room room
     ) {
         return this.getBookingByRoom(room.getId());
     }
@@ -231,7 +228,7 @@ public class Bookings extends Table {
      * @return The Booking if it was found, otherwise null
      */
     public Booking getBookingByRoom(
-            @NotNull Integer id
+            Integer id
     ) {
         try {
             PreparedStatement statement = this.getConnection().prepareStatement(  // Create a prepared statement
@@ -255,13 +252,13 @@ public class Bookings extends Table {
     }
 
     public boolean deleteBooking(
-            @NotNull Booking booking
+            Booking booking
     ) {
         return this.deleteBooking(booking.getID());
     }
 
     public boolean deleteBooking(
-            @NotNull Integer id
+            Integer id
     ) {
         try {
             PreparedStatement statement = this.getConnection().prepareStatement(
@@ -282,10 +279,16 @@ public class Bookings extends Table {
      *
      * @param booking The Booking object to insert or update
      */
-    public void upsert(
-            @NotNull Booking booking
+    Integer upsert(
+            Booking booking
     ) {
-        this.upsert(booking.getID(), booking.getCustomerID(), booking.getRoomID(), booking.getArrivalDate(), booking.getDepartureDate());
+        Integer newId = this.upsert(
+                booking.getID(), booking.getCustomerID(), booking.getRoomID(),
+                booking.getArrivalDate(), booking.getDepartureDate()
+        );
+
+        booking.setId(newId);
+        return newId;
     }
 
     /**
@@ -298,18 +301,18 @@ public class Bookings extends Table {
      * @param arrival The arrival java.sql.Date object
      * @param departure The departure java.sql.Date object
      */
-    public void upsert(
+    Integer upsert(
             Integer id,  // This may be null
-            @NotNull Customer customer,
-            @NotNull Room room,
-            @NotNull Date arrival,
-            @NotNull Date departure
+            Customer customer,
+            Room room,
+            Date arrival,
+            Date departure
     ) {
         if (id == null) {
             id = 0;  // There should never be an ID of 0 in the database
         }
 
-        this.upsert(id, customer.getCid(), room.getId(), arrival, departure);
+        return this.upsert(id, customer.getCid(), room.getId(), arrival, departure);
     }
 
     /**
@@ -322,12 +325,12 @@ public class Bookings extends Table {
      * @param arrival The arrival java.sql.Date object
      * @param departure The departure java.sql.Date object
      */
-    public void upsert(
-            Integer id,
-            @NotNull Integer cid,
-            @NotNull Integer rid,
-            @NotNull Date arrival,
-            @NotNull Date departure
+    Integer upsert(
+            Integer id,  // This may be null
+            Integer cid,
+            Integer rid,
+            Date arrival,
+            Date departure
     ) {
         if (id == null) {
             id = 0;  // There should never be an ID of 0 in the database
@@ -335,11 +338,12 @@ public class Bookings extends Table {
 
         try {
             PreparedStatement statement = this.getConnection().prepareStatement(
-                    "INSERT INTO booking (id, cid, rid, arrival, departure) " +
-                    "VALUES (?, ?, ?, ?, ?) " +
-                    "ON DUPLICATE KEY UPDATE " +
-                            "cid=VALUES(cid), rid=VALUES(rid), " +
-                            "arrival=VALUES(arrival), departure=VALUES(departure)"
+                "INSERT INTO booking (id, cid, rid, arrival, departure) " +
+                "VALUES (?, ?, ?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE " +
+                        "cid=VALUES(cid), rid=VALUES(rid), " +
+                        "arrival=VALUES(arrival), departure=VALUES(departure)",
+                Statement.RETURN_GENERATED_KEYS
             );
 
             statement.setInt(1, id);
@@ -349,8 +353,16 @@ public class Bookings extends Table {
             statement.setDate(5, departure);
 
             statement.executeUpdate();
+
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 }

@@ -27,6 +27,10 @@ public class Booking implements Row {
 
     // region Getters and setters
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getID() {
         return id;
     }
@@ -56,7 +60,7 @@ public class Booking implements Row {
     }
 
     public Room getRoom(Integer id) {
-        return ((Rooms) Connection.room).getRoom(this.getRoomID());
+        return ((Rooms) Connection.room).getRoom(id);
     }
 
     public void setRoom(Room room) {
