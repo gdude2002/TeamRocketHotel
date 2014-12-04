@@ -10,6 +10,7 @@ public class Main {
         Connection conn = null;
         try {
             conn = new Connection();
+            Home home = new Home(conn);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

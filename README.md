@@ -20,7 +20,7 @@ Create a Swing frontend for..
 * Creating a client
 * Editing a client
 
-Suites/rooms:
+Suites/rooms (102):
 
 * Penthouse suite - 2 at €400/night
 * Family suite - 20 at €180/night
