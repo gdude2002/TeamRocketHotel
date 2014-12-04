@@ -4,7 +4,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -16,7 +15,10 @@ hs_err_pid*
 
 # Eclipse stuff
 /build
+/out
 .project
 .metadata/
 .classpath
 .settings
+.gradle
+.idea
