@@ -7,7 +7,8 @@ This is just a class project.
 
 ### Compiling
 
-Open a terminal, `cd` into the directory, and run `gradlew shadowJar`.
+Open a terminal, `cd` into the directory, and run `gradlew shadowJar`. You must compile
+this way or your JAR may not have the dependencies it needs.
 
 ### Specifications
 
