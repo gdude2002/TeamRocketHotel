@@ -2,20 +2,10 @@ package Hotel;
 
 import Hotel.database.Connection;
 
-import java.awt.EventQueue;
 import java.util.GregorianCalendar;
 
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JScrollBar;
 
 public class Home {
 
@@ -40,6 +30,9 @@ public class Home {
     public Home(Connection connection) {
         this.connection = connection;
         this.initialize();
+    }
+
+    public void show() {
         this.frame.setVisible(true);
     }
 
@@ -49,7 +42,7 @@ public class Home {
     protected void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         GregorianCalendar calendar = new GregorianCalendar();
 
@@ -98,7 +91,7 @@ public class Home {
         lblName.setBounds(91, 25, 46, 14);
         BookingPane.add(lblName);
 
-        JComboBox checkinBox = new JComboBox();
+        JComboBox<java.util.Date> checkinBox = new JComboBox<>();
         checkinBox.setBounds(44, 172, 93, 20);
         BookingPane.add(checkinBox);
 

@@ -7,16 +7,13 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String ... args) {
-        Connection conn = null;
+        Connection conn;
         try {
             conn = new Connection();
             Home home = new Home(conn);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            home.show();
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
-        System.out.println(conn.toString());
     }
 }
