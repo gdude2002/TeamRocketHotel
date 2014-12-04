@@ -3,6 +3,14 @@ TeamRocketHotel
 
 ### Hotel reservation system
 
+This is just a class project.
+
+### Compiling
+
+Open a terminal, `cd` into the directory, and run `gradlew shadowJar`.
+
+### Specifications
+
 Here are the specifications given to us in the task brief.
 
 Create a reservation system which books hotel rooms. It charges various rates for
